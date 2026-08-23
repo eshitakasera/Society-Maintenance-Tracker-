@@ -1,42 +1,27 @@
 # 🏘️ Society Maintenance Tracker
 
-A full-stack web application for managing society/apartment complaints and notices. Built with **Next.js 16**, **Prisma**, **SQLite**, **Tailwind CSS**, and **Resend** for email notifications.
+A full-stack web application for managing society/apartment complaints and notices. Built with **Next.js 16**, **Prisma**, **SQLite**, and **Resend** for email notifications.
 
-Residents can raise complaints, track their status, and receive email updates. Admins can manage complaints, post notices, and monitor the overall society health via a rich analytics dashboard.
-
----
-
-## ✨ Key Highlights
-
-- 🎨 **Modern Glassmorphism UI** with dark theme, smooth animations, and responsive design
-- 📊 **Admin Dashboard** with category intelligence cards, status overview, and overdue tracking
-- ⏰ **Auto-Overdue System** — Admin-configurable days after which complaints are automatically flagged
-- 📧 **Real Email Notifications** via Resend API on status changes and important notices
-- 🔐 **Role-Based Access Control** — Separate flows for Admins and Residents
-- 🖼️ **Image Collage Login/Register Pages** with full-screen background
-- 📋 **Inline Priority Management** — Set priority directly from the table without opening details
-- 🔍 **Advanced Filtering** — Filter by date, category, priority, and status
+Residents can raise complaints, track their status, and receive email updates. Admins can manage complaints, post notices, and monitor the overall society health via a dashboard.
 
 ---
 
 ## 📸 Features
 
 ### 👤 Resident Features
-- **Register & Login** with secure credential-based authentication and image collage backgrounds
+- **Register & Login** with secure credential-based authentication
 - **Raise Complaints** with title, description, category, and optional photo upload
 - **Track Complaint Status** — Open → In Progress → Resolved / Flagged
 - **View Notice Board** — Important notices are pinned at the top
 - **Email Notifications** — Receive emails when complaint status changes or a new important notice is posted
 
 ### 🔧 Admin Features
-- **Dashboard** — Overview of all complaints by status, category, overdue count, and category intelligence cards with dynamic background images
-- **Manage Complaints** — Update status, set priority (Low/Medium/High) directly from table, add admin notes
-- **Auto-Overdue Detection** — Configure number of days (1–30) after which complaints are automatically marked overdue and sorted to the top
-- **Manual Overdue Flagging** — Flag any complaint as overdue at any time using the Flag Overdue button
+- **Dashboard** — Overview of all complaints by status, category, and overdue count
+- **Manage Complaints** — Update status, set priority (Low/Medium/High), add admin notes
 - **Complaint History** — Full audit trail of every status change with timestamps
+- **Flag Overdue Complaints** — Complaints open too long can be flagged
 - **Post Notices** — Create regular or important notices (important = email to all residents)
 - **Bulk Actions** — Select multiple complaints, paginate, filter, and sort
-- **Click-to-View Hints** — Visual indicators (chevron arrows + hint bar) guiding users to click rows for details
 
 ---
 
@@ -44,8 +29,8 @@ Residents can raise complaints, track their status, and receive email updates. A
 
 | Layer          | Technology                          |
 |----------------|-------------------------------------|
-| **Framework**  | Next.js 16 (App Router, Turbopack)  |
-| **Frontend**   | React 19, Tailwind CSS 3, Lucide Icons, Framer Motion |
+| **Framework**  | Next.js 16 (App Router)             |
+| **Frontend**   | React 19, Tailwind CSS 3, Lucide Icons |
 | **Backend**    | Next.js API Routes (Server-side)    |
 | **Database**   | SQLite via Prisma ORM               |
 | **Auth**       | NextAuth.js (Credentials Provider)  |
@@ -60,18 +45,16 @@ Residents can raise complaints, track their status, and receive email updates. A
 society-maintenance-tracker/
 ├── prisma/
 │   ├── schema.prisma          # Database schema (User, Complaint, Notice, etc.)
-│   └── dev.db                 # SQLite database file (git-ignored)
+│   └── dev.db                 # SQLite database file
 ├── public/
 │   ├── uploads/               # Uploaded complaint photos
-│   ├── banner-tech.png        # Raise Complaint page banner
-│   ├── banner-blue.png        # Notice Board page banner
 │   └── ...                    # Static assets (images, icons)
 ├── src/
 │   ├── app/                   # Next.js App Router
 │   │   ├── page.tsx           # Landing page (auto-redirects by role)
-│   │   ├── login/             # Login page (image collage background)
-│   │   ├── register/          # Registration page (image collage background)
-│   │   ├── dashboard/         # Admin dashboard with category intelligence
+│   │   ├── login/             # Login page
+│   │   ├── register/          # Registration page
+│   │   ├── dashboard/         # Admin dashboard
 │   │   ├── complaints/        # Complaints pages (list, new, [id] detail)
 │   │   ├── notices/           # Notice board
 │   │   └── api/               # Backend API routes
@@ -89,8 +72,7 @@ society-maintenance-tracker/
 │   │   └── prisma.ts          # Prisma client singleton
 │   └── types/
 │       └── next-auth.d.ts     # TypeScript type extensions for NextAuth
-├── .env                       # Environment variables (git-ignored)
-├── .gitignore
+├── .env                       # Environment variables
 ├── package.json
 ├── tailwind.config.ts
 └── tsconfig.json
@@ -121,7 +103,7 @@ npm install
 
 ### 3. Set Up Environment Variables
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the root directory (or rename `.env.example`):
 
 ```env
 # Database
@@ -189,7 +171,7 @@ The app will be available at: **[http://localhost:3000](http://localhost:3000)**
 
 ### Dashboard
 | Method | Endpoint            | Description                        |
-|--------|---------------------|-------------------------------------|
+|--------|---------------------|------------------------------------|
 | GET    | `/api/dashboard`    | Admin analytics (status & category counts) |
 
 ---
@@ -252,18 +234,6 @@ The app sends real email notifications using **Resend** in these scenarios:
 
 ---
 
-## ⏰ Auto-Overdue System
-
-Admins can configure the number of days after which complaints are **automatically marked as overdue**:
-
-- A prominent amber-themed selector appears after the filters on the Active Complaints page
-- Options range from **1 day to 30 days** (default: 3 days)
-- Overdue complaints are automatically **sorted to the top** of the list with a red "OVERDUE" badge
-- Admins can also **manually flag** any complaint as overdue at any time using the "Flag Overdue" button
-- The setting is persisted in `localStorage` per browser
-
----
-
 ## 🧪 Available Scripts
 
 | Script            | Command           | Description                    |
@@ -281,8 +251,8 @@ Admins can configure the number of days after which complaints are **automatical
 ## 🔐 User Roles
 
 | Role       | Permissions                                                        |
-|------------|---------------------------------------------------------------------|
-| **ADMIN**  | View dashboard, manage all complaints, set priority, update status, configure auto-overdue, flag overdue, post notices |
+|------------|--------------------------------------------------------------------|
+| **ADMIN**  | View dashboard, manage all complaints, set priority, update status, post notices |
 | **RESIDENT** | Raise complaints, track own complaints, view notice board        |
 
 ---
