@@ -184,6 +184,19 @@ export default function ComplaintsList() {
 
   const [activeRecord, setActiveRecord] = useState<{ record: Complaint } | null>(null);
 
+  const openRecord = async (r: Complaint) => {
+    // Optimistically open with existing data immediately
+    setActiveRecord({ record: r });
+    // Then fetch full detail with history
+    try {
+      const res = await fetch(`/api/complaints/${r.id}`);
+      if (res.ok) {
+        const full = await res.json();
+        setActiveRecord({ record: full });
+      }
+    } catch {}
+  };
+
   const [actionModal, setActionModal] = useState<{
     record: Complaint;
     action: Exclude<Status, "Open">;
@@ -464,7 +477,7 @@ export default function ComplaintsList() {
 
           <div className="w-full bg-indigo-50 border-b border-indigo-100 px-8 py-3 flex items-center justify-center shadow-inner">
              <span className="text-indigo-700 font-bold text-sm tracking-wide flex items-center gap-2">
-               <ChevronRight size={18} strokeWidth={2.5} className="opacity-80" /> CLICK ON ANY ROW TO VIEW FULL DETAILS
+               <ChevronRight size={18} strokeWidth={2.5} className="opacity-80" /> CLICK ON ANY ROW TO VIEW FULL DESCRIPTION, PHOTOS, RESIDENT INFO & STATUS HISTORY
              </span>
           </div>
 
@@ -523,14 +536,15 @@ export default function ComplaintsList() {
                       {pageRecords.map((r, idx) => (
                         <tr
                           key={r.id}
-                          onClick={() => setActiveRecord({ record: r })}
+                          onClick={() => openRecord(r)}
                           className={`group border-b border-[#e3eaf5] cursor-pointer transition-colors ${
                             selected.has(r.id) ? "bg-[#e3ecf9]" : idx % 2 === 0 ? "bg-white hover:bg-[#f4f8fd]" : "bg-[#f8fafd] hover:bg-[#f4f8fd]"
                           }`}
                         >
-                          <td className="w-9 border-r border-[#e3eaf5] px-3 py-2 text-center" onClick={(e) => e.stopPropagation()}>
+                          <td className="w-9 border-r border-[#e3eaf5] px-3 py-2 text-center">
                             <input
                               type="checkbox"
+                              onClick={(e) => e.stopPropagation()}
                               checked={selected.has(r.id)}
                               onChange={() => toggleRow(r.id)}
                               className="h-3.5 w-3.5 accent-[#1a53a1] cursor-pointer"
@@ -548,9 +562,9 @@ export default function ComplaintsList() {
                           <td className="px-3 py-2 border-r border-[#e3eaf5] text-slate-900 font-medium truncate max-w-[200px]">
                              {r.title}
                           </td>
-                          <td className="px-3 py-2 border-r border-[#e3eaf5] whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
+                          <td className="px-3 py-2 border-r border-[#e3eaf5] whitespace-nowrap">
                             {session?.user.role === "ADMIN" && r.status !== "Resolved" ? (
-                              <div className="relative inline-block">
+                              <div className="relative inline-block" onClick={(e) => e.stopPropagation()}>
                                 <select
                                   value={r.priority || ""}
                                   onChange={(e) => setPriority(r, e.target.value)}

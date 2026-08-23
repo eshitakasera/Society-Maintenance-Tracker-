@@ -206,8 +206,10 @@ body:has(.dashboard-full-page) .container {
 
 body:has(.complaints-full-page) .page-wrapper,
 body:has(.notices-full-page) .page-wrapper,
-body:has(.dashboard-full-page) .page-wrapper {
+body:has(.dashboard-full-page) .page-wrapper,
+body:has(.home-full-page) .page-wrapper {
   padding: 0;
+  max-width: 100%;
 }
 
 .text-center { text-align: center; }

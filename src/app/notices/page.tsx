@@ -273,7 +273,7 @@ export default function NoticesPage() {
                 <section className="mb-10">
                   <div className="mt-4 mb-2">{renderToolbar()}</div>
                   <div className="bg-indigo-50/50 text-indigo-500 font-medium text-[11px] px-4 py-2 border-y border-[#d9e4f3] flex items-center justify-end">
-                    <span className="flex items-center gap-1.5"><ChevronRight size={13} className="opacity-70" /> Click on any row to see full details</span>
+                    <span className="flex items-center gap-1.5"><ChevronRight size={13} className="opacity-70" /> Click on any row to see full notice content and attachments</span>
                   </div>
                   <div className="overflow-x-auto border-b border-[#d9e4f3]">
                     <table className="w-full text-xs border-collapse">
