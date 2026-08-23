@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useCallback } from "react";
+import React, { useEffect, useMemo, useState, useCallback } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import {
@@ -67,7 +67,7 @@ const statusStyles: Record<Status, string> = {
 // Config for the action confirmation modal.
 const actionModalConfig: Record<
   Exclude<Status, "Open">,
-  { title: string; verb: string; badgeClass: string; confirmClass: string; icon: JSX.Element }
+  { title: string; verb: string; badgeClass: string; confirmClass: string; icon: React.ReactNode }
 > = {
   "Resolved": {
     title: "Resolve Complaint",
