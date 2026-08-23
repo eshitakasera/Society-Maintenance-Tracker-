@@ -139,9 +139,10 @@ export default function NewComplaint() {
                       id="category"
                       name="category"
                       required
+                      defaultValue=""
                       className="absolute inset-0 w-full h-full appearance-none outline-none pl-3 pr-11 text-[15px] text-slate-800 bg-transparent cursor-pointer z-20"
                     >
-                      <option value="" disabled selected>Select a category</option>
+                      <option value="" disabled>Select a category</option>
                       <option value="Plumbing">Plumbing</option>
                       <option value="Electrical">Electrical</option>
                       <option value="Carpentry">Carpentry</option>

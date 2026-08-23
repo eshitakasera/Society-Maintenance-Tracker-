@@ -346,15 +346,15 @@ export default function ComplaintsList() {
               );
             })
           ) : (
-            <span className="px-3 py-1.5 font-bold">My Complaints</span>
+            <span className="px-3 py-1.5 font-bold mr-2">My Complaints</span>
+          )}
+          
+          {session?.user.role === "RESIDENT" && (
+             <Link href="/complaints/new" className="px-3 py-1.5 rounded-[3px] bg-[#0fa968] text-white hover:bg-[#0c8c56] font-bold transition-colors">
+               + Raise Complaint
+             </Link>
           )}
         </div>
-        
-        {session?.user.role === "RESIDENT" && (
-           <Link href="/complaints/new" className="px-3 py-1.5 mr-2 rounded bg-[#0fa968] text-white hover:bg-[#0c8c56] font-bold">
-             + Raise Complaint
-           </Link>
-        )}
       </div>
 
       <div className="flex-1 flex flex-col min-w-0">
@@ -364,14 +364,14 @@ export default function ComplaintsList() {
             className="relative w-full h-40 md:h-48 overflow-hidden flex items-center justify-center shrink-0"
             style={{ 
               backgroundImage: view === "queue" 
-                ? "url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop')" 
-                : "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop')", 
+                ? "url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=2070&auto=format&fit=crop')" 
+                : "url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2070&auto=format&fit=crop')", 
               backgroundSize: "cover", 
               backgroundPosition: "center" 
             }}
           >
-            <div className="pointer-events-none absolute inset-0 bg-black/60" />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
+            <div className="pointer-events-none absolute inset-0 bg-[#17386d]/40" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#17386d]/60 via-transparent to-transparent" />
             <div className="relative z-10 max-w-2xl text-center px-4">
               <h2 className="font-satoshi text-4xl font-bold text-white mb-2 drop-shadow-sm">
                 {view === "queue" ? "Active Complaints" : "Resolved Complaints"}
