@@ -10,7 +10,7 @@ Residents can raise complaints, track their status, and receive email updates. A
 
 **Live URL:** [https://society-maintenance-tracker-1-zqd7.onrender.com](https://society-maintenance-tracker-1-zqd7.onrender.com)
 
-**How to test the app:**
+** How to test the app:**
 - **For Residents:** You can use the email **`demo.societymaintenance@gmail.com`** to register and login as a resident. It is just for demo purposes and completely risk-free, as we have already configured the Resend API for this specific email.
 - **Test with your own email:** If you want to see the email notifications directly on your phone/inbox, you can register with any of your own email IDs! *Note: to get it working for your own email, you'll need to go to Resend, generate your own API key, and put that in your `.env` file (or Render environment variables), then register and login as a resident.*
 - **For Admins:** You can use **any** email ID! Just register first, and then login using that same email ID, and it will work.
