@@ -61,10 +61,10 @@ export default function NewComplaint() {
       {/* Hero Banner */}
       <section
         className="relative bg-[#0b2236] h-40 md:h-48 overflow-hidden shrink-0 flex items-center justify-center border-b border-[#112a42]"
-        style={{ backgroundImage: "url('/dataentry.png')", backgroundSize: "cover", backgroundPosition: "center" }}
+        style={{ backgroundImage: "url('/banner-tech.png')", backgroundSize: "cover", backgroundPosition: "center" }}
       >
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#010b14] via-[#010b14]/70 to-transparent" />
-        <div className="pointer-events-none absolute inset-0 bg-[#041a2d]/30 mix-blend-multiply" />
+        <div className="pointer-events-none absolute inset-0 bg-black/40" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#010b14]/70 via-transparent to-transparent" />
 
         <div className="relative z-10 max-w-2xl text-center px-4">
           <h2 className="font-satoshi text-4xl font-bold text-white mb-2 drop-shadow-sm">
