@@ -62,7 +62,7 @@ export default function ProfileMenu({
   }
 
   async function handleLogout() {
-    await signOut({ callbackUrl: "/login" });
+    await signOut({ callbackUrl: `${window.location.origin}/login` });
   }
 
   const triggerClasses =
