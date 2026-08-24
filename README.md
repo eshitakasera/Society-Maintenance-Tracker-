@@ -10,10 +10,17 @@ Residents can raise complaints, track their status, and receive email updates. A
 
 **Live URL:** [https://society-maintenance-tracker-1-zqd7.onrender.com](https://society-maintenance-tracker-1-zqd7.onrender.com)
 
-** How to test the app:**
-- **For Residents:** You can use the email **`demo.societymaintenance@gmail.com`** to register and login as a resident. It is just for demo purposes and completely risk-free, as we have already configured the Resend API for this specific email.
-- **Test with your own email:** If you want to see the email notifications directly on your phone/inbox, you can register with any of your own email IDs! *Note: to get it working for your own email, you'll need to go to Resend, generate your own API key, and put that in your `.env` file (or Render environment variables), then register and login as a resident.*
-- **For Admins:** You can use **any** email ID! Just register first, and then login using that same email ID, and it will work.
+**How to test the app:**
+
+Use these pre-seeded demo accounts — no registration needed:
+
+| Role | Email | Password |
+|------|-------|----------|
+| 🏠 **Resident** | `demo.societymaintenance@gmail.com` | `Demo@1234` |
+| 🔧 **Admin** | `pq@gmail.com` | `Admin@1234` |
+
+- **Test with your own email:** Register with any email to see live email notifications. You'll need your own Resend API key in `.env` for emails to reach your inbox.
+- **Note:** Demo accounts are automatically re-seeded on every deployment, so passwords always reset to the values above.
 
 ---
 
@@ -56,6 +63,8 @@ Residents can raise complaints, track their status, and receive email updates. A
 society-maintenance-tracker/
 ├── prisma/
 │   ├── schema.prisma          # Database schema (User, Complaint, Notice, etc.)
+│   ├── seed.js                # Demo user seed script (runs on every deploy)
+│   ├── seed.ts                # TypeScript version of the seed script
 │   └── dev.db                 # SQLite database file
 ├── public/
 │   ├── uploads/               # Uploaded complaint photos
@@ -75,7 +84,7 @@ society-maintenance-tracker/
 │   │       └── notices/       # CRUD for notices
 │   ├── components/            # Reusable React components
 │   │   ├── Navigation.tsx     # Top navigation bar
-│   │   ├── ProfileMenu.tsx    # User avatar & dropdown menu
+│   │   ├── ProfileMenu.tsx    # User avatar & dropdown menu (with sign out)
 │   │   └── Providers.tsx      # NextAuth SessionProvider wrapper
 │   ├── lib/                   # Backend utilities
 │   │   ├── auth.ts            # NextAuth configuration
@@ -137,16 +146,20 @@ MAIL_FROM="Society Admin <onboarding@resend.dev>"
 
 > **Note:** With Resend's free plan using `onboarding@resend.dev`, emails can only be sent to the email address you signed up with. For production, verify your own domain on Resend's dashboard.
 
-### 4. Set Up the Database
+### 4. Set Up the Database & Seed Demo Users
 
 ```bash
 npx prisma generate
 npx prisma db push
+node prisma/seed.js
 ```
 
 This will:
 - Generate the Prisma client from the schema
 - Create the SQLite database and apply the schema
+- Seed two demo accounts:
+  - **Resident:** `demo.societymaintenance@gmail.com` / `Demo@1234`
+  - **Admin:** `pq@gmail.com` / `Admin@1234`
 
 ### 5. Run the Development Server
 
@@ -155,6 +168,33 @@ npm run dev
 ```
 
 The app will be available at: **[http://localhost:3000](http://localhost:3000)**
+
+---
+
+## ☁️ Deploying to Render
+
+1. Push your code to GitHub
+2. Create a new **Web Service** on [render.com](https://render.com) connected to your repo
+3. Set the **Build Command** to:
+   ```
+   npm install && npm run build
+   ```
+   > The build script automatically runs `prisma generate`, `prisma db push`, `seed.js`, and `next build`
+4. Set the **Start Command** to:
+   ```
+   npm run start
+   ```
+5. Add these **Environment Variables** on Render:
+
+   | Key | Value |
+   |-----|-------|
+   | `DATABASE_URL` | `file:./dev.db` |
+   | `NEXTAUTH_SECRET` | `your-secret-key` |
+   | `NEXTAUTH_URL` | `https://your-app-name.onrender.com` ⚠️ Must be your actual Render URL |
+   | `RESEND_API_KEY` | `re_your_api_key` |
+   | `MAIL_FROM` | `Society Admin <onboarding@resend.dev>` |
+
+   > ⚠️ **Important:** `NEXTAUTH_URL` must be your live Render URL (not localhost), otherwise sign out will redirect incorrectly.
 
 ---
 
@@ -247,15 +287,16 @@ The app sends real email notifications using **Resend** in these scenarios:
 
 ## 🧪 Available Scripts
 
-| Script            | Command           | Description                    |
-|-------------------|--------------------|--------------------------------|
-| Dev Server        | `npm run dev`      | Start development server       |
-| Build             | `npm run build`    | Create production build        |
-| Start Production  | `npm run start`    | Start production server        |
-| Lint              | `npm run lint`     | Run ESLint                     |
-| Prisma Generate   | `npx prisma generate` | Generate Prisma client     |
-| Prisma DB Push    | `npx prisma db push`  | Push schema to database    |
-| Prisma Studio     | `npx prisma studio`   | Open visual database editor|
+| Script            | Command                  | Description                    |
+|-------------------|--------------------------|--------------------------------|
+| Dev Server        | `npm run dev`            | Start development server       |
+| Build             | `npm run build`          | Generate + push DB + seed + build |
+| Start Production  | `npm run start`          | Start production server        |
+| Lint              | `npm run lint`           | Run ESLint                     |
+| Seed Demo Users   | `node prisma/seed.js`    | Create/reset demo accounts     |
+| Prisma Generate   | `npx prisma generate`    | Generate Prisma client         |
+| Prisma DB Push    | `npx prisma db push`     | Push schema to database        |
+| Prisma Studio     | `npx prisma studio`      | Open visual database editor    |
 
 ---
 
