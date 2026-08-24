@@ -12,15 +12,28 @@ Residents can raise complaints, track their status, and receive email updates. A
 
 **How to test the app:**
 
-Use these pre-seeded demo accounts — no registration needed:
+### Option 1 — Use Pre-Seeded Demo Accounts (No Registration Needed)
+
+These accounts are already set up — just login directly:
 
 | Role | Email | Password |
 |------|-------|----------|
 | 🏠 **Resident** | `demo.societymaintenance@gmail.com` | `Demo@1234` |
 | 🔧 **Admin** | `pq@gmail.com` | `Admin@1234` |
 
-- **Test with your own email:** Register with any email to see live email notifications. You'll need your own Resend API key in `.env` for emails to reach your inbox.
-- **Note:** Demo accounts are automatically re-seeded on every deployment, so passwords always reset to the values above.
+### Option 2 — Register with Your Own Email
+
+You can also **register with any email ID** of your choice as either a **Resident** or **Admin** — just click Register and fill in the details.
+
+> 📧 **Want to receive real email notifications?**
+> By default, emails only work for the configured Resend account.
+> To receive emails on **your own inbox**, you must add your own **Resend API key** in the `.env` file (or Render Environment Variables):
+> ```env
+> RESEND_API_KEY="re_your_api_key_here"
+> ```
+> Get your free API key at [resend.com](https://resend.com).
+
+> **Note:** Demo accounts (`pq@gmail.com` & `demo.societymaintenance@gmail.com`) are automatically re-seeded on every deployment — passwords always reset to the values above.
 
 ---
 
